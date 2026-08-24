@@ -45,22 +45,28 @@ export async function POST(req: NextRequest) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 55000);
 
+    const payload: Record<string, unknown> = {
+      model: MODEL,
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: user },
+      ],
+      temperature: 0.9,
+      max_tokens: 700,
+      response_format: { type: "json_object" },
+    };
+    // DashScope 的思考型模型（如 qwen3.7-plus）关闭思考可显著降低延迟
+    if (BASE_URL.includes("dashscope")) {
+      payload.enable_thinking = false;
+    }
+
     const res = await fetch(`${BASE_URL}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${API_KEY}`,
       },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          { role: "system", content: system },
-          { role: "user", content: user },
-        ],
-        temperature: 0.9,
-        max_tokens: 700,
-        response_format: { type: "json_object" },
-      }),
+      body: JSON.stringify(payload),
       signal: controller.signal,
     });
     clearTimeout(timer);
