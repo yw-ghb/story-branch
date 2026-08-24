@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-ember-500 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ember-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ember-500/40 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-ink-400/30 bg-white px-4 py-2 text-sm text-ink-700 transition-colors hover:border-ink-400/60 hover:bg-paper-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink-400/20 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-ink-700;
+  }
+  .field-input {
+    @apply w-full rounded-lg border border-ink-400/25 bg-white px-3 py-2 text-sm text-ink-900 placeholder:text-ink-400 focus:border-ember-500/60 focus:outline-none focus:ring-2 focus:ring-ember-500/15;
+  }
+  .card {
+    @apply rounded-xl border border-paper-200 bg-white shadow-card;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none;
+  }
+}
